@@ -23,5 +23,7 @@ export const verifyToken = async (token: string): Promise<JwtPayload> => {
   const secretKey = createSecretKey(env.JWT_SECRET, 'utf-8');
   const { payload } = await jwtVerify(token, secretKey);
 
-  return payload as unknown as JwtPayload;
+  // Extract the nested payload property since generateToken wraps it in {payload}
+  const nestedPayload = payload as { payload: JwtPayload };
+  return nestedPayload.payload;
 }

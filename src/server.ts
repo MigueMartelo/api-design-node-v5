@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
 import { isTest } from '../env.ts';
+import { errorHandler } from './middleware/errorHandlers.ts';
 
 const app = express();
 
@@ -30,6 +31,8 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/habits', habitRoutes);
+
+app.use(errorHandler);
 
 export { app };
 
